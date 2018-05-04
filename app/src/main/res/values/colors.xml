@@ -3,4 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="selectDay">#e01015</color>
+    <color name="currentDay">#ffffff</color>
+    <color name="noteDay">#9C27B0</color>
 </resources>
