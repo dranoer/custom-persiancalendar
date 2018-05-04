@@ -10,15 +10,20 @@
         android:id="@+id/persian_calendar"
         android:layout_width="match_parent"
         android:layout_height="290sp"
-        app:pcv_colorBackground="#292929"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        app:pcv_colorBackground="#000000"
         app:pcv_colorDayName="#bab6b6"
-        app:pcv_colorHoliday="#ffd506"
+        app:pcv_colorHoliday="#ff0000"
         app:pcv_colorHolidaySelected="#f1f2f3"
-        app:pcv_colorNormalDaySelected="#d9d9d9"
         app:pcv_colorNormalDay="#f3f4f5"
+        app:pcv_colorNormalDaySelected="#ffffff"
         app:pcv_eventUnderlineColor="#02f0f0"
-        app:pcv_fontSize="20sp"
-        app:pcv_headersFontSize="14sp"/>
+        app:pcv_longpressUnderlineColor="#ffc107"
+        app:pcv_typefacePath="fonts/NotoNaskhArabic-Regular.ttf"
+        app:pcv_fontSize="15sp"
+        app:pcv_headersFontSize="16sp"
+        />
 
     <TextView
         android:id="@+id/txt_day_month"

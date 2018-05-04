@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2016 Phil Shadlyn
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <string-array name="number_decimals" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="group_separators" translatable="false">
+        <item>@string/group_separator_none</item>
+        <item>,</item>
+        <item>" "</item>
+        <item>.</item>
+    </string-array>
+
+    <string-array name="decimal_separators" translatable="false">
+        <item>.</item>
+        <item>,</item>
+    </string-array>
+
+    <!--custom calendar-->
+    <declare-styleable name="PersianCalendarView">
+        <attr name="pcv_typefacePath" format="string"></attr>
+        <attr name="pcv_headersTypefacePath" format="string"></attr>
+        <attr name="pcv_colorBackground" format="color"></attr>
+        <attr name="pcv_colorHoliday" format="color"></attr>
+        <attr name="pcv_colorHolidaySelected" format="color"></attr>
+        <attr name="pcv_colorNormalDaySelected" format="color"></attr>
+        <attr name="pcv_colorNormalDay" format="color"></attr>
+        <attr name="pcv_colorDayName" format="color"></attr>
+        <attr name="pcv_eventUnderlineColor" format="color"></attr>
+        <attr name="pcv_todayBackground" format="reference"></attr>
+        <attr name="pcv_selectedDayBackground" format="reference"></attr>
+        <attr name="pcv_fontSize" format="dimension"></attr>
+        <attr name="pcv_headersFontSize" format="dimension"></attr>
+        <attr name="pcv_longpressUnderlineColor" format="color"></attr>
+    </declare-styleable>
+
+</resources>

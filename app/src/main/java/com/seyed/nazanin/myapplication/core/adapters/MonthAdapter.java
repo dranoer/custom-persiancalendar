@@ -11,12 +11,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.seyed.nazanin.myapplication.R;
+import com.seyed.nazanin.myapplication.SpManager;
 import com.seyed.nazanin.myapplication.core.Constants;
 import com.seyed.nazanin.myapplication.core.PersianCalendarHandler;
 import com.seyed.nazanin.myapplication.core.fragments.MonthFragment;
 import com.seyed.nazanin.myapplication.core.models.Day;
+import com.seyed.nazanin.myapplication.core.models.PersianDate;
 
 import java.util.List;
+
 
 public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> {
     private Context mContext;
@@ -25,10 +28,12 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
     private final int TYPE_DAY = 1;
     private List<Day> mDays;
     private int mSelectedDay = -1;
-    private int mNotedDay = -1;
+    private int mLongpressDay = -1;
     private PersianCalendarHandler mCalendarHandler;
     private final int mFirstDayOfWeek;
     private final int mTotalDays;
+    SpManager spManager;
+    private Long spDay;
 
     public MonthAdapter(Context context, MonthFragment monthFragment, List<Day> days) {
         mFirstDayOfWeek = days.get(0).getDayOfWeek();
@@ -49,13 +54,13 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
         notifyDataSetChanged();
     }
 
-    public void noteDay(int dayOfMonth) {
-        mNotedDay = dayOfMonth + 6 + mFirstDayOfWeek;
+    public void longpressDay(int dayOfMonth) {
+        mLongpressDay = dayOfMonth + 6 + mFirstDayOfWeek;
         notifyDataSetChanged();
     }
 
-    public void clearNotedDay() {
-        mNotedDay = -1;
+    public void clearLongpressDay() {
+        mLongpressDay = -1;
         notifyDataSetChanged();
     }
 
@@ -63,7 +68,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
         TextView mNum;
         View mToday;
         View mSelectDay;
-        View mNoteDay;
+        View mLongpress;
         View mEvent;
 
         public ViewHolder(View itemView) {
@@ -72,11 +77,12 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
             mNum = (TextView) itemView.findViewById(R.id.num);
             mToday = itemView.findViewById(R.id.today);
             mSelectDay = itemView.findViewById(R.id.select_day);
-            mNoteDay = itemView.findViewById(R.id.note_day);
+            mLongpress = itemView.findViewById(R.id.longpress_day);
             mEvent = itemView.findViewById(R.id.event);
 
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
+            spManager=SpManager.getInstance(mContext);
         }
 
         @Override
@@ -90,7 +96,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
             if (position - 7 - mFirstDayOfWeek >= 0) {
                 mMonthFragment.onClickItem(mDays
                         .get(position - 7 - mFirstDayOfWeek)
-                        .getPersianDate());
+                        .getmPersianDate());
 
                 mSelectedDay = position;
                 notifyDataSetChanged();
@@ -99,35 +105,21 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
 
         @Override
         public boolean onLongClick(View v) {
-
-            ////
-//            mDays.get(0).setmNote(true);
-
             int position = getAdapterPosition();
             position += 6 - (position % 7) * 2;
             if (mTotalDays < position - 6 - mFirstDayOfWeek) {
                 return false;
             }
 
-            Log.i("bbb", String.valueOf(position));
-
             if (position - 7 - mFirstDayOfWeek >= 0) {
 
                 mMonthFragment.onClickItem(mDays
                         .get(position - 7 - mFirstDayOfWeek)
-                        .getPersianDate());
+                        .getmPersianDate());
+
 
                 int c = position - 7 - mFirstDayOfWeek;
-                mDays.get(c).setNote(true);
-
-//                mNotedDay = position;
-
-//                dayWithNote
-/*                Day n = mDays.get(position - 7 - mFirstDayOfWeek);
-                n.setNote(true);
-                Log.i("nnn", String.valueOf(n.isNote()));*/
-
-
+                mDays.get(c).setLongpress(true);
 
                 notifyDataSetChanged();
             }
@@ -136,7 +128,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
                 try {
                     mMonthFragment.onLongClickItem(mDays
                             .get(position - 7 - mFirstDayOfWeek)
-                            .getPersianDate());
+                            .getmPersianDate());
                 } catch (Exception e) {
                     // Ignore it for now
                     // I guess it will occur on CyanogenMod phones
@@ -151,6 +143,8 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
     public MonthAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(mContext).inflate(R.layout.item_day, parent, false);
 
+
+
         return new ViewHolder(v);
     }
 
@@ -159,11 +153,8 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
         holder.mToday.setBackgroundResource(mCalendarHandler.getTodayBackground());
         holder.mSelectDay.setBackgroundResource(mCalendarHandler.getSelectedDayBackground());
         holder.mEvent.setBackgroundColor(mCalendarHandler.getColorEventUnderline());
-
-        //Note
-//        holder.mNoteDay.setBackgroundResource(mCalendarHandler.getNoteBackground());
-        holder.mNoteDay.setBackgroundColor(mCalendarHandler.getColorNoteUnderline());
-
+        holder.mLongpress.setBackgroundColor(mCalendarHandler.getColorLongpressUnderline());
+//        List<Detail> details =  DetailLab.get(mContext).getDetails();
         position += 6 - (position % 7) * 2;
         if (mTotalDays < position - 6 - mFirstDayOfWeek) {
             return;
@@ -181,45 +172,28 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
                     holder.mNum.setTextColor(mCalendarHandler.getColorNormalDay());
                 }
 
-                if (mDays.get(position - 7 - mFirstDayOfWeek).isNote()) {
-                    holder.mNoteDay.setVisibility(View.VISIBLE);
+                PersianDate date = mDays.get(position - 7 -mFirstDayOfWeek).getmPersianDate();
+                String noteDayOfMonth = String.valueOf(date.getDayOfMonth());
+                String noteMonth = String.valueOf(date.getMonth());
+                String noteYear = String.valueOf(date.getYear());
+                String totalDay = noteYear + "-" + noteMonth + "-" + noteDayOfMonth;
+
+                if ( mDays.get(position - 7 - mFirstDayOfWeek).isLongpress())
+//                        DetailLab.get(mContext).getDayDetail(totalDay) != null)
+                {
+                    holder.mLongpress.setVisibility(View.VISIBLE);
                 }
 
                 Day day = mDays.get(position - 7 - mFirstDayOfWeek);
                 if (day.isEvent()) {
-                    if (day.isLocalEvent() && mCalendarHandler.isHighlightingLocalEvents())
+                    if(day.isLocalEvent() && mCalendarHandler.isHighlightingLocalEvents())
                         holder.mEvent.setVisibility(View.VISIBLE);
-                    else if (!day.isLocalEvent() && mCalendarHandler.isHighlightingOfficialEvents())
+                    else if(!day.isLocalEvent() && mCalendarHandler.isHighlightingOfficialEvents())
                         holder.mEvent.setVisibility(View.VISIBLE);
                     else holder.mEvent.setVisibility(View.GONE);
                 } else {
                     holder.mEvent.setVisibility(View.GONE);
                 }
-
-/*                if (position == mNotedDay) {
-                    holder.mNoteDay.setVisibility(View.VISIBLE);
-                }*/
-
-/*                //Note
-                if (position == mNotedDay ) {
-
-                    day.setmNote(true);
-
-                    holder.mNoteDay.setVisibility(View.VISIBLE);
-
-                    if (mDays.get(position - 7 - mFirstDayOfWeek).isHoliday() && day.ismNote()) {
-                        holder.mNum.setTextColor(mCalendarHandler.getColorHolidaySelected());
-                    }
-                    if (day.ismNote()) {
-                        holder.mNoteDay.setVisibility(View.VISIBLE);
-                    }
-                    else {
-//                        holder.mNoteDay.setVisibility(View.VISIBLE);
-                        holder.mNum.setTextColor(mCalendarHandler.getColorNoteUnderline());
-                    }
-                } else {
-                    holder.mNoteDay.setVisibility(View.GONE);
-                }*/
 
                 if (mDays.get(position - 7 - mFirstDayOfWeek).isToday()) {
                     holder.mToday.setVisibility(View.VISIBLE);
@@ -242,7 +216,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
             } else {
                 holder.mToday.setVisibility(View.GONE);
                 holder.mSelectDay.setVisibility(View.GONE);
-                holder.mNoteDay.setVisibility(View.GONE);
+                holder.mLongpress.setVisibility(View.GONE);
                 holder.mNum.setVisibility(View.GONE);
                 holder.mEvent.setVisibility(View.GONE);
             }
@@ -254,7 +228,7 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
             holder.mNum.setTypeface(mCalendarHandler.getHeadersTypeface());
             holder.mToday.setVisibility(View.GONE);
             holder.mSelectDay.setVisibility(View.GONE);
-            holder.mNoteDay.setVisibility(View.GONE);
+            holder.mLongpress.setVisibility(View.GONE);
             holder.mEvent.setVisibility(View.GONE);
             holder.mNum.setVisibility(View.VISIBLE);
             mCalendarHandler.setFont(holder.mNum);
@@ -278,5 +252,4 @@ public class MonthAdapter extends RecyclerView.Adapter<MonthAdapter.ViewHolder> 
     private boolean isPositionHeader(int position) {
         return position < 7;
     }
-
 }

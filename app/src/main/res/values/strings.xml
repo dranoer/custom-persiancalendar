@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Ncalendar</string>
+    <string name="group_separator_none">پوچ</string>
 </resources>

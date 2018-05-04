@@ -23,12 +23,10 @@ import com.seyed.nazanin.myapplication.core.models.PersianDate;
 import com.seyed.nazanin.myapplication.helpers.DateConverter;
 
 import java.util.Calendar;
-
 public class CalendarFragment extends Fragment implements ViewPager.OnPageChangeListener {
     private ViewPager mMonthViewPager;
     private PersianCalendarHandler mPersianCalendarHandler;
     private int mViewPagerPosition;
-    private CalendarAdapter calendarAdapter;
 
     @Nullable
     @Override
@@ -53,13 +51,10 @@ public class CalendarFragment extends Fragment implements ViewPager.OnPageChange
     }
 
     private void createViewPagers() {
-        calendarAdapter = new CalendarAdapter(getChildFragmentManager());
-        mMonthViewPager.setAdapter(calendarAdapter);
+        mMonthViewPager.setAdapter(new CalendarAdapter(getChildFragmentManager()));
         mMonthViewPager.setCurrentItem(Constants.MONTHS_LIMIT / 2);
-        mMonthViewPager.addOnPageChangeListener(this);
 
-//        Log.i("ccc", String.valueOf(calendarAdapter.getCount()));
-//        mMonthViewPager.setOffscreenPageLimit(calendarAdapter.getCount());
+        mMonthViewPager.addOnPageChangeListener(this);
     }
 
     public void changeMonth(int position) {
@@ -136,6 +131,4 @@ public class CalendarFragment extends Fragment implements ViewPager.OnPageChange
     public int getViewPagerPosition() {
         return mViewPagerPosition;
     }
-
-
 }

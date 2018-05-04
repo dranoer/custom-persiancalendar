@@ -8,14 +8,14 @@ public class Day {
     private PersianDate mPersianDate;
     private boolean mEvent;
     private boolean mLocalEvent;
-    private boolean mLongPress;
+    private boolean mLongpress;
 
-    public boolean isNote() {
-        return mLongPress;
+    public boolean isLongpress() {
+        return mLongpress;
     }
 
-    public void setNote(boolean mNote) {
-        this.mLongPress = mNote;
+    public void setLongpress(boolean mLongpress) {
+        this.mLongpress = mLongpress;
     }
 
     public boolean isEvent() {
@@ -73,11 +73,11 @@ public class Day {
         this.mDayOfWeek = dayOfWeek;
     }
 
-    public PersianDate getPersianDate() {
+    public PersianDate getmPersianDate() {
         return mPersianDate;
     }
 
-    public void setPersianDate(PersianDate persianDate) {
-        this.mPersianDate = persianDate;
+    public void setmPersianDate(PersianDate mPersianDate) {
+        this.mPersianDate = mPersianDate;
     }
 }

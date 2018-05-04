@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.seyed.nazanin.myapplication.core.PersianCalendarHandler;
 import com.seyed.nazanin.myapplication.core.interfaces.OnDayClickedListener;
+import com.seyed.nazanin.myapplication.core.interfaces.OnDayLongClickedListener;
 import com.seyed.nazanin.myapplication.core.interfaces.OnMonthChangedListener;
 import com.seyed.nazanin.myapplication.core.models.CalendarEvent;
 import com.seyed.nazanin.myapplication.core.models.PersianDate;
@@ -29,20 +30,48 @@ public class MainActivity extends AppCompatActivity {
         calendar.setOnMonthChangedListener(new OnMonthChangedListener() {
             @Override
             public void onChanged(PersianDate date) {
-                Toast.makeText(MainActivity.this, calendar.getMonthName(date),Toast.LENGTH_SHORT).show();
+//                Toast.makeText(MainActivity.this, calendar.getMonthName(date),Toast.LENGTH_SHORT).show();
             }
         });
+/*
         persianCalendarView.setOnDayClickedListener(new OnDayClickedListener() {
             @Override
             public void onClick(PersianDate date) {
                 for(CalendarEvent e : calendar.getAllEventsForDay(date))
-                    Toast.makeText(MainActivity.this, e.getTitle(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(MainActivity.this, e.getTitle(), Toast.LENGTH_LONG).show();
 
 
                 calendar.addLocalEvent(new CalendarEvent(
                         today.clone().rollDay(2, false), "Some event that will be added in runtime", false
                 ));
                 persianCalendarView.update();
+            }
+        });
+*/
+/*
+        persianCalendarView.setOnDayLongClickedListener(new OnDayLongClickedListener() {
+            @Override
+            public void onLongClick(final PersianDate date) {
+                Toast.makeText(getApplicationContext(), date.getDayOfMonth(), Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+        calendar.setOnDayClickedListener(new OnDayClickedListener() {
+            @Override
+            public void onClick(PersianDate date) {
+                    for(CalendarEvent e : calendar.getAllEventsForDay(date))
+//                    Toast.makeText(MainActivity.this, e.getTitle(), Toast.LENGTH_LONG).show();
+                        calendar.addLocalEvent(new CalendarEvent(
+                                today.clone().rollDay(2, false), "Some event that will be added in runtime", false
+                        ));
+//                    persianCalendarView.update();
+                }
+        });
+
+        calendar.setOnDayLongClickedListener(new OnDayLongClickedListener() {
+            @Override
+            public void onLongClick(PersianDate date) {
+                Toast.makeText(getApplicationContext(), date.getDayOfMonth(), Toast.LENGTH_LONG).show();
             }
         });
 
@@ -55,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         txtDayMonth.setText(dayAndMonth);
         txtYear.setText(calendar.formatNumber(today.getYear()));
 
-        calendar.setColorBackground(getResources().getColor(android.R.color.holo_blue_dark));
-        persianCalendarView.update();
+        calendar.setColorBackground(getResources().getColor(android.R.color.black));
+//        persianCalendarView.update();
     }
 }

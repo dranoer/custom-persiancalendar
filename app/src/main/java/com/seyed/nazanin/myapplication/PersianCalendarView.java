@@ -43,8 +43,7 @@ public class PersianCalendarView extends FrameLayout {
     private void makeView(Context context, AttributeSet attrs){
         mCalendarHandler = PersianCalendarHandler.getInstance(context);
         View view = LayoutInflater.from(context).inflate(R.layout.view_calendar, this, true);
-        TypedArray typedArray = context.obtainStyledAttributes(attrs,
-                R.styleable.PersianCalendarView, 0, 0);
+        TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.PersianCalendarView, 0, 0);
 
         if(typedArray.hasValue(R.styleable.PersianCalendarView_pcv_typefacePath)) {
             Typeface typeface = Typeface.createFromAsset(context.getAssets(),
@@ -58,22 +57,18 @@ public class PersianCalendarView extends FrameLayout {
             if (typeface != null)
                 mCalendarHandler.setHeadersTypeface(typeface);
         }
-
         mCalendarHandler.setDaysFontSize(typedArray.getDimensionPixelSize(R.styleable.PersianCalendarView_pcv_fontSize, 25));
         mCalendarHandler.setHeadersFontSize(typedArray.getDimensionPixelSize(R.styleable.PersianCalendarView_pcv_headersFontSize, 20));
         mCalendarHandler.setTodayBackground(typedArray.getResourceId(R.styleable.PersianCalendarView_pcv_todayBackground, mCalendarHandler.getTodayBackground()));
+        mCalendarHandler.setSelectedDayBackground(typedArray.getResourceId(R.styleable.PersianCalendarView_pcv_selectedDayBackground, mCalendarHandler.getSelectedDayBackground()));
         mCalendarHandler.setColorDayName(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorDayName, mCalendarHandler.getColorDayName()));
         mCalendarHandler.setColorBackground(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorBackground, mCalendarHandler.getColorHolidaySelected()));
         mCalendarHandler.setColorHolidaySelected(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorHolidaySelected, mCalendarHandler.getColorHolidaySelected()));
         mCalendarHandler.setColorHoliday(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorHoliday, mCalendarHandler.getColorHoliday()));
         mCalendarHandler.setColorNormalDaySelected(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorNormalDaySelected, mCalendarHandler.getColorNormalDaySelected()));
         mCalendarHandler.setColorNormalDay(typedArray.getColor(R.styleable.PersianCalendarView_pcv_colorNormalDay, mCalendarHandler.getColorNormalDay()));
-
         mCalendarHandler.setColorEventUnderline(typedArray.getColor(R.styleable.PersianCalendarView_pcv_eventUnderlineColor, mCalendarHandler.getColorEventUnderline()));
-        mCalendarHandler.setSelectedDayBackground(typedArray.getResourceId(R.styleable.PersianCalendarView_pcv_selectedDayBackground, mCalendarHandler.getSelectedDayBackground()));
-        //Note
-//        mCalendarHandler.setNoteBackground(typedArray.getResourceId(R.styleable.PersianCalendarView_pcv_colorDayWithNote, mCalendarHandler.getNoteBackground()));
-        mCalendarHandler.setColorNoteUnderline(typedArray.getColor(R.styleable.PersianCalendarView_pcv_noteUnderlineColor, mCalendarHandler.getColorNoteUnderline()));
+        mCalendarHandler.setColorLongpressUnderline(typedArray.getColor(R.styleable.PersianCalendarView_pcv_longpressUnderlineColor, mCalendarHandler.getColorLongpressUnderline()));
 
         try {
             mCalendarFragment = CalendarFragment.class.newInstance();
@@ -96,12 +91,8 @@ public class PersianCalendarView extends FrameLayout {
     public void update(){
         this.invalidate();
         setBackgroundColor(mCalendarHandler.getColorBackground());
-
         if(mCalendarHandler.getOnEventUpdateListener() != null)
             mCalendarHandler.getOnEventUpdateListener().update();
-
-//        if (mCalendarHandler.getColorNoteUnderline() != null)
-
     }
 
     public void goToDate(PersianDate date){
@@ -138,5 +129,4 @@ public class PersianCalendarView extends FrameLayout {
     public void setOnMonthChangedListener(OnMonthChangedListener listener){
         mCalendarHandler.setOnMonthChangedListener(listener);
     }
-
 }

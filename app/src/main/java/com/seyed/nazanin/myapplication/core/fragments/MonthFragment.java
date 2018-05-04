@@ -21,14 +21,13 @@ import com.seyed.nazanin.myapplication.core.models.Day;
 import com.seyed.nazanin.myapplication.core.models.PersianDate;
 
 import java.util.List;
-
 public class MonthFragment extends Fragment {
     private PersianCalendarHandler mPersianCalendarHandler;
     private CalendarFragment mCalendarFragment;
     private PersianDate mPersianDate;
     private int mOffset;
     private MonthAdapter mMonthAdapter;
-    List<Day> days;
+    private List<Day> days;
 
     @Override
     public View onCreateView(
@@ -73,7 +72,6 @@ public class MonthFragment extends Fragment {
         if (mOffset == 0 && mCalendarFragment.getViewPagerPosition() == mOffset) {
             // mCalendarFragment.selectDay(mPersianCalendarHandler.getToday());
             // updateTitle();
-
         }
 
         LocalBroadcastManager.getInstance(getContext()).registerReceiver(setCurrentMonthReceiver,
@@ -82,7 +80,7 @@ public class MonthFragment extends Fragment {
         return view;
     }
 
-    private BroadcastReceiver setCurrentMonthReceiver =  new BroadcastReceiver() {
+    private BroadcastReceiver setCurrentMonthReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             int value = intent.getExtras().getInt(Constants.BROADCAST_FIELD_TO_MONTH_FRAGMENT);
@@ -92,14 +90,10 @@ public class MonthFragment extends Fragment {
                 int day = intent.getExtras().getInt(Constants.BROADCAST_FIELD_SELECT_DAY);
                 if (day != -1) {
                     mMonthAdapter.selectDay(day);
-                    mMonthAdapter.noteDay(day);
-//                    int b = mMonthAdapter.getItemViewType(day);
-//                    days.get(day).isNote();
-
+                    mMonthAdapter.longpressDay(day);
                 }
             } else if (value == Constants.BROADCAST_TO_MONTH_FRAGMENT_RESET_DAY) {
                 mMonthAdapter.clearSelectedDay();
-//                mMonthAdapter.clearNotedDay();
             }
         }
     };
@@ -111,7 +105,6 @@ public class MonthFragment extends Fragment {
     }
 
     public void onClickItem(PersianDate day) {
-        //mCalendarFragment.selectDay(day);
         if (mPersianCalendarHandler.getOnDayClickedListener() != null)
             mPersianCalendarHandler.getOnDayClickedListener().onClick(day);
     }
@@ -119,19 +112,5 @@ public class MonthFragment extends Fragment {
     public void onLongClickItem(PersianDate day) {
         if (mPersianCalendarHandler.getOnDayLongClickedListener() != null)
             mPersianCalendarHandler.getOnDayLongClickedListener().onLongClick(day);
-
-
-//            mMonthAdapter.noteDay(day.getDayOfMonth());
-
-        //mCalendarFragment.addEventOnCalendar(day);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-//        mMonthAdapter.selectDay();
-
-
     }
 }

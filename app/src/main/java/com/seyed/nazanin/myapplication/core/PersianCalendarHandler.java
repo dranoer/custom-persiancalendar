@@ -51,15 +51,12 @@ public class PersianCalendarHandler {
     private int mColorNormalDaySelected = Color.BLUE;
     private int mColorDayName = Color.LTGRAY;
     private int mColorEventUnderline = Color.RED;
-    private int mColorNoteUnderline = Color.CYAN;
+    private int mColorLongpressUnderline = Color.GREEN;
 
     @DrawableRes
     private int mSelectedDayBackground = R.drawable.circle_select;
     @DrawableRes
     private int mTodayBackground = R.drawable.circle_current_day;
-
-  /*  @DrawableRes
-    private int mNoteBackground = R.drawable.circle_note;*/
 
     private float mDaysFontSize = 25;
     private float mHeadersFontSize = 20;
@@ -322,6 +319,7 @@ public class PersianCalendarHandler {
         int dayOfWeek = DateConverter.persianToCivil(persianDate).getDayOfWeek() % 7;
 
         try {
+
             PersianDate today = getToday();
             for (int i = 1; i <= 31; i++) {
                 persianDate.setDayOfMonth(i);
@@ -341,7 +339,7 @@ public class PersianCalendarHandler {
                     if (getOfficialEventsForDay(persianDate).size() > 0)
                         day.setEvent(true, false);
 
-                day.setPersianDate(persianDate.clone());
+                day.setmPersianDate(persianDate.clone());
 
                 if (persianDate.equals(today)) {
                     day.setToday(true);
@@ -440,12 +438,11 @@ public class PersianCalendarHandler {
         return this;
     }
 
-    //Note2
-    public int getColorNoteUnderline() {
-        return mColorNoteUnderline;
+    public int getColorLongpressUnderline() {
+        return mColorLongpressUnderline;
     }
-    public PersianCalendarHandler setColorNoteUnderline (int colorNoteUnderline) {
-        mColorNoteUnderline = colorNoteUnderline;
+    public PersianCalendarHandler setColorLongpressUnderline (int colorLongpressUnderline) {
+        mColorLongpressUnderline = colorLongpressUnderline;
         return this;
     }
 
@@ -487,25 +484,33 @@ public class PersianCalendarHandler {
         mLocalEvents.add(event);
     }
 
-    public OnDayClickedListener getOnDayClickedListener() {
-        return mOnDayClickedListener;
-    }
     public PersianCalendarHandler setOnDayClickedListener(OnDayClickedListener onDayClickedListener) {
         mOnDayClickedListener = onDayClickedListener;
         return this;
+    }
+
+    public OnDayClickedListener getOnDayClickedListener() {
+        return mOnDayClickedListener;
     }
 
     public PersianCalendarHandler setOnDayLongClickedListener(OnDayLongClickedListener onDayLongClickedListener) {
         mOnDayLongClickedListener = onDayLongClickedListener;
         return this;
     }
+
     public OnDayLongClickedListener getOnDayLongClickedListener() {
         return mOnDayLongClickedListener;
+    }
+
+    public PersianCalendarHandler setOnMonthChangedListener(OnMonthChangedListener onMonthChangedListener) {
+        mOnMonthChangedListener = onMonthChangedListener;
+        return this;
     }
 
     public OnEventUpdateListener getOnEventUpdateListener() {
         return mOnEventUpdateListener;
     }
+
     public PersianCalendarHandler setOnEventUpdateListener(OnEventUpdateListener onEventUpdateListener) {
         mOnEventUpdateListener = onEventUpdateListener;
         return this;
@@ -514,15 +519,11 @@ public class PersianCalendarHandler {
     public OnMonthChangedListener getOnMonthChangedListener() {
         return mOnMonthChangedListener;
     }
-    public PersianCalendarHandler setOnMonthChangedListener(OnMonthChangedListener onMonthChangedListener) {
-        mOnMonthChangedListener = onMonthChangedListener;
-        return this;
-    }
-
 
     public int getTodayBackground() {
         return mTodayBackground;
     }
+
     public PersianCalendarHandler setTodayBackground(int todayBackground) {
         mTodayBackground = todayBackground;
         return this;
@@ -539,18 +540,9 @@ public class PersianCalendarHandler {
     public Typeface getHeadersTypeface() {
         return mHeadersTypeface;
     }
+
     public PersianCalendarHandler setHeadersTypeface(Typeface headersTypeface) {
         mHeadersTypeface = headersTypeface;
         return this;
     }
-
-/*    //Note
-    public int getNoteBackground() {
-        return mNoteBackground;
-    }
-    public PersianCalendarHandler setNoteBackground(int noteBackground) {
-        mNoteBackground = noteBackground;
-        return this;
-    }*/
-
 }
