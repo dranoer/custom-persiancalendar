@@ -1,6 +1,6 @@
 # custom-persian-calendar
 
-[![](https://jitpack.io/v/nazzanin/custom-persian-calendar.svg)](https://jitpack.io/#nazzanin/custom-persian-calendar)
+https://github.com/nazzanin/custom-persian-calendar.git
 
 This a custom calendar based on https://github.com/Roojin/persian-calendar-view 
 
