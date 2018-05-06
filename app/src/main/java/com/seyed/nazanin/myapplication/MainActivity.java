@@ -86,5 +86,6 @@ public class MainActivity extends AppCompatActivity {
 
         calendar.setColorBackground(getResources().getColor(android.R.color.black));
 //        persianCalendarView.update();
+
     }
 }
