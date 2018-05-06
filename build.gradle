@@ -5,10 +5,13 @@ buildscript {
     repositories {
         google()
         jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:2.1'
+
+//        implementation 'com.github.nazzanin:custom-persian-calendar:1.01'
         
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -20,6 +23,7 @@ allprojects {
     repositories {
         google()
         jcenter()
+//        maven { url 'https://jitpack.io' }
     }
 }
 
