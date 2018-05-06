@@ -1,6 +1,6 @@
 # custom-persian-calendar
 
-https://github.com/nazzanin/custom-persian-calendar.git
+implementation 'com.github.nazzanin:custom-persian-calendar:1.02'
 
 This a custom calendar based on https://github.com/Roojin/persian-calendar-view 
 
