@@ -1,4 +1,4 @@
-# 📅 Custom-Persian-Calendar
+# 📅 custom_persiancalendar
 
 [![JitPack](https://jitpack.io/v/nazzanin/custom-persian-calendar.svg)](https://jitpack.io/#nazzanin/custom-persian-calendar)
 
